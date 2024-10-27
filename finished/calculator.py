@@ -67,6 +67,14 @@ def operator (first_num, second_num, operator):
     else:
         print("ERROR: ready_to_operate is False")
 
+# Display Field
+
+dark_field = "#260a2eFF"
+dark_background = "#0C0535FF"
+dark_text = "#FFFFFFFF"
+display = Text(app, dark_field, dark_text, 18, 12)
+
+
 # Number Buttons LAMBDA
 one = ttk.Button(app, text = "1", command = lambda: append_num(1, num_string_list))
 two = ttk.Button(app, text = "2", command = lambda: append_num(2, num_string_list))
@@ -110,6 +118,7 @@ equal.grid(row = 4, column = 2)
 
 # The CE RESET button
 reset = ttk.Button(app, text = "CE")
+reset.grid(row = 4, column = 0)
 
 
 

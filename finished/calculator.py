@@ -67,7 +67,7 @@ def operator (first_num, second_num, operator):
     else:
         print("ERROR: ready_to_operate is False")
 
-# Display Field
+# Display Field f
 
 dark_field = "#260a2eFF"
 dark_background = "#0C0535FF"

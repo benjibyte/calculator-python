@@ -10,7 +10,7 @@ ready_to_operate = False
 
 # Start App
 app = tk.Tk()
-
+append_num_list = True
 # Apply Width and Height "app.VAR" to the app window-variable
 dimensions = f"{width}x{height}"
 app.geometry(dimensions)
@@ -26,6 +26,9 @@ def append_num(num, list_num):
     global append_num_list
     if append_num_list == True: # Update the list num, so we can operate on the two numbers later
         list_num.append(num)
+        append_num_list = False # Set it to false so the next number is just written on
+        
+        print(list_num)
         return list_num
     else: # append another digit to the first number and then replace the old "num" in the list
         write_to_num = str(list_num[0]) 
@@ -34,22 +37,28 @@ def append_num(num, list_num):
         write_to_num += str(num)
         list_num[0] = write_to_num
         ready_to_operate = True
+        print(list_num)    
 
 
 
 def operator (first_num, second_num, operator):
     global ready_to_operate
+    print(f"Ready To Operate : {ready_to_operate}")
     if ready_to_operate:
 
         if operator == "+":
-            return first_num + second_num 
-            # Returns a result to a lable to get displayed, I also NEED to call a function that puts this result to the first index of a list
+            result = first_num + second_num
+            return result
+            # Returns a result to a label to get displayed, I also NEED to call a function that puts this result to the first index of a list
             # call it on line 45 (here) just before the return part
         elif operator == "-":
-            return first_num - second_num
+            result = first_num - second_num
+            return result
         elif operator == "×":
-            return first_num * second_num
+            result = first_num * second_num
+            return result
         elif operator == "÷":
+            
             result = first_num / second_num if first_num != 0 else "You can't divide by 0!"
             return result
         else:
@@ -84,6 +93,21 @@ eight.grid(row = 1, column = 1)
 nine.grid(row = 1, column = 2)
 
 zero.grid(row = 4, column = 0)
+
+# The Operator Buttons
+add = ttk.Button(app, text = "+")
+sub = ttk.Button(app, text = "-")
+mult = ttk.Button(app, text = "×")
+divi = ttk.Button(app, text = "÷")
+equal = ttk.Button(app, text = "=")
+
+# Format the Operator Buttons
+add.grid(row = 1, column = 4)
+sub.grid(row = 2, column = 4)
+mult.grid(row = 3, column = 4)
+divi.grid(row = 4, column = 4)
+equal.grid(row = 4, column = 2)
+
 
 
 # The way i wrote the operator function makes me want to display one number at a time and then when

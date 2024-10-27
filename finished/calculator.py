@@ -9,8 +9,6 @@ append_num_list = False
 ready_to_operate = False
 
 
-
-
 # Start App, initialize the font
 app = tk.Tk()
 main_font = tkf.Font(app, family = "Helvitica", size=18, weight = "bold")
@@ -22,8 +20,11 @@ app.geometry(dimensions)
 # Create an abstract grid so we can arrange buttons and labels and stuff
 app.grid()
 
-
-
+def reset():
+    global num_string_list
+    num_string_list = [] # Reset it back to an empty list
+    display.config(text = "")
+    
 
 def append_num(num, list_num):
     global ready_to_operate
@@ -33,6 +34,7 @@ def append_num(num, list_num):
         append_num_list = False # Set it to false so the next number is just written on
         
         print(list_num)
+        display.config(text = str(list_num))
         return list_num
     else: # append another digit to the first number and then replace the old "num" in the list
         write_to_num = str(list_num[0]) 
@@ -41,9 +43,8 @@ def append_num(num, list_num):
         write_to_num += str(num)
         list_num[0] = write_to_num
         ready_to_operate = True
+        display.config(text =write_to_num)
         print(list_num)    
-
-
 
 def operator (first_num, second_num, operator):
     global ready_to_operate
@@ -76,8 +77,8 @@ def operator (first_num, second_num, operator):
 dark_field = "#260a2e"
 dark_background = "#0C0535"
 dark_text = "#FFFFFF"
-display = tk.Message(app, bg = dark_field, fg = dark_text, width=250)
-display.grid(row = 1, column= 0, columnspan=5)
+display = tk.Message(app, bg = dark_field, fg = dark_text, width=250, font=main_font)
+display.grid(row = 1, column= 0, columnspan=5, sticky = "nsew")
 
 # Number Buttons LAMBDA
 one = ttk.Button(app, text = "1", command = lambda: append_num(1, num_string_list))
@@ -121,26 +122,8 @@ divi.grid(row = 5, column = 4)
 equal.grid(row = 5, column = 2)
 
 # The CE RESET button
-reset = ttk.Button(app, text = "CE")
+reset = ttk.Button(app, text = "CE", command = reset())
 reset.grid(row = 5, column = 0)
-
-
-
-
-# The way i wrote the operator function makes me want to display one number at a time and then when
-# the list has two numbers in it and the ready operator variable is true, then if the user preses 
-# the operator button then it operates on both numbers and displays the result while storing the result in the first 
-# index of the list and deleting the second index of the list, and setting ready to operate to false again until the user 
-# either presses another operator button or the (CE) reset button. 
-
-# Operator Buttons
-# add = ttk.Button(app, text = "+", command = )
-# sub = ttk.Button(app, text = "-", command = )
-# mult = ttk.Button(app, text = "×", command = )
-# divi = ttk.Button(app, text = "÷", command = )
-# equal = ttk.Button(app, text = "=", command = )
-
-
 
 
 # Keep app open until closing

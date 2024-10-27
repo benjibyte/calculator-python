@@ -92,7 +92,7 @@ seven.grid(row = 1, column = 0)
 eight.grid(row = 1, column = 1)
 nine.grid(row = 1, column = 2)
 
-zero.grid(row = 4, column = 0)
+zero.grid(row = 4, column = 1)
 
 # The Operator Buttons
 add = ttk.Button(app, text = "+")
@@ -107,6 +107,10 @@ sub.grid(row = 2, column = 4)
 mult.grid(row = 3, column = 4)
 divi.grid(row = 4, column = 4)
 equal.grid(row = 4, column = 2)
+
+# The CE RESET button
+reset = ttk.Button(app, text = "CE")
+
 
 
 

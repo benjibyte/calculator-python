@@ -21,8 +21,10 @@ app.geometry(dimensions)
 app.grid()
 
 def reset():
-    global num_string_list
+    global num_string_list, append_num_list, ready_to_operate
     num_string_list = [] # Reset it back to an empty list
+    append_num_list = True
+    ready_to_operate = False
     display.config(text = "")
     
 
@@ -30,11 +32,11 @@ def append_num(num, list_num):
     global ready_to_operate
     global append_num_list
     if append_num_list == True: # Update the list num, so we can operate on the two numbers later
-        list_num.append(num)
+        list_num.append(str(num))
         append_num_list = False # Set it to false so the next number is just written on
         
         print(list_num)
-        display.config(text = str(list_num))
+        display.config(text = str(num))
         return list_num
     else: # append another digit to the first number and then replace the old "num" in the list
         write_to_num = str(list_num[0]) 
@@ -42,7 +44,7 @@ def append_num(num, list_num):
         # operated on they are put back into the first index[0] of the num list
         write_to_num += str(num)
         list_num[0] = write_to_num
-        ready_to_operate = True
+      
         display.config(text =write_to_num)
         print(list_num)    
 
@@ -122,7 +124,7 @@ divi.grid(row = 5, column = 4)
 equal.grid(row = 5, column = 2)
 
 # The CE RESET button
-reset = ttk.Button(app, text = "CE", command = reset())
+reset = ttk.Button(app, text = "CE", command = reset)
 reset.grid(row = 5, column = 0)
 
 

@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import tkinter.font as tkf
 # Define window width and height, setup the number string, setuip the ready_to_operate variable that switches from input mode to calculation mode
 width = 300
 height = 400
@@ -8,8 +9,11 @@ append_num_list = False
 ready_to_operate = False
 
 
-# Start App
+
+
+# Start App, initialize the font
 app = tk.Tk()
+main_font = tkf.Font(app, family = "Helvitica", size=18, weight = "bold")
 append_num_list = True
 # Apply Width and Height "app.VAR" to the app window-variable
 dimensions = f"{width}x{height}"
@@ -54,7 +58,7 @@ def operator (first_num, second_num, operator):
         elif operator == "-":
             result = first_num - second_num
             return result
-        elif operator == "×":
+        elif operator == "x":
             result = first_num * second_num
             return result
         elif operator == "÷":
@@ -69,11 +73,11 @@ def operator (first_num, second_num, operator):
 
 # Display Field f
 
-dark_field = "#260a2eFF"
-dark_background = "#0C0535FF"
-dark_text = "#FFFFFFFF"
-display = Text(app, dark_field, dark_text, 18, 12)
-
+dark_field = "#260a2e"
+dark_background = "#0C0535"
+dark_text = "#FFFFFF"
+display = tk.Message(app, bg = dark_field, fg = dark_text, width=250)
+display.grid(row = 1, column= 0, columnspan=5)
 
 # Number Buttons LAMBDA
 one = ttk.Button(app, text = "1", command = lambda: append_num(1, num_string_list))
@@ -88,19 +92,19 @@ nine = ttk.Button(app, text = "9", command = lambda: append_num(9, num_string_li
 zero = ttk.Button(app, text = "0", command = lambda: append_num(0, num_string_list))
 
 # Format the Number Buttons
-one.grid(row = 3, column = 0)
-two.grid(row = 3, column = 1)
-three.grid(row = 3, column = 2)
+one.grid(row = 4, column = 0)
+two.grid(row = 4, column = 1)
+three.grid(row = 4, column = 2)
 
-four.grid(row = 2, column = 0)
-five.grid(row = 2, column = 1)
-six.grid(row = 2, column = 2)
+four.grid(row = 3, column = 0)
+five.grid(row = 3, column = 1)
+six.grid(row = 3, column = 2)
 
-seven.grid(row = 1, column = 0)
-eight.grid(row = 1, column = 1)
-nine.grid(row = 1, column = 2)
+seven.grid(row = 2, column = 0)
+eight.grid(row = 2, column = 1)
+nine.grid(row = 2, column = 2)
 
-zero.grid(row = 4, column = 1)
+zero.grid(row = 5, column = 1)
 
 # The Operator Buttons
 add = ttk.Button(app, text = "+")
@@ -110,15 +114,15 @@ divi = ttk.Button(app, text = "÷")
 equal = ttk.Button(app, text = "=")
 
 # Format the Operator Buttons
-add.grid(row = 1, column = 4)
-sub.grid(row = 2, column = 4)
-mult.grid(row = 3, column = 4)
-divi.grid(row = 4, column = 4)
-equal.grid(row = 4, column = 2)
+add.grid(row = 2, column = 4)
+sub.grid(row = 3, column = 4)
+mult.grid(row = 4, column = 4)
+divi.grid(row = 5, column = 4)
+equal.grid(row = 5, column = 2)
 
 # The CE RESET button
 reset = ttk.Button(app, text = "CE")
-reset.grid(row = 4, column = 0)
+reset.grid(row = 5, column = 0)
 
 
 

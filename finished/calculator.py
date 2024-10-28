@@ -5,14 +5,16 @@ import tkinter.font as tkf
 width = 300
 height = 400
 num_string_list = []
-append_num_list = False
+first_num_digits = True
+second_num_digits = False
 ready_to_operate = False
 global_operator = "" # set to 
+
 
 # Start App, initialize the font
 app = tk.Tk()
 main_font = tkf.Font(app, family = "Helvetica", size=18, weight = "bold")
-append_num_list = True
+first_num_digits = True
 # Apply Width and Height "app.VAR" to the app window-variable
 dimensions = f"{width}x{height}"
 app.geometry(dimensions)
@@ -21,41 +23,42 @@ app.title("Calculator")
 app.grid()
 
 def reset():
-    global num_string_list, append_num_list, ready_to_operate
+    global num_string_list, first_num_digits, ready_to_operate, global_operator, second_num_digits
     num_string_list = [] # Reset it back to an empty list
-    append_num_list = True
+    first_num_digits = True
+    second_num_digits = False
     ready_to_operate = False
     global_operator = ""
     display.config(text = "")
     
 
-def append_num(num, list_num):
-    global ready_to_operate
-    global append_num_list
-    if append_num_list: # Update the list num, so we can operate on the two numbers later
-        list_num.append(num)
-        
-        append_num_list = False # Set it to false so the next number is just written on
-        
-        print(list_num)
-        display.config(text = str(num))
-        return list_num
-    elif len: # append another digit to the first number and then replace the old "num" in the list
-        write_to_num = str(list_num[0]) 
-        # There will only be 2 things in the list, because once they are 
-        # operated on they are put back into the first index[0] of the num list
-        write_to_num += str(num)
-        print(list_num)  
-        list_num[0] = write_to_num
-      
-        display.config(text =write_to_num)
-        print(list_num)    
+def append_num(num, list_num, old_length=0):
+    global ready_to_operate, first_num_digits, second_num_digits
+    
+    if first_num_digits and second_num_digits == False:
+        if len(list_num) == old_length:
+            list_num.append(str(num))
+        else:
+            list_num[old_length] += str(num)
+        display.config(text = list_num[old_length])
+    elif second_num_digits and first_num_digits == False:
+        if len(list_num) == (old_length + 1):
+            list_num.append(str(num))
+        else:
+            list_num[(old_length + 1)] += str(num)
+        display.config(text = list_num[(old_length + 1)])
+    print(list_num)
+    return list_num
+
+
+
 
 def begin_math(operator):
-    global ready_to_operate, append_num_list, global_operator
+    global ready_to_operate, first_num_digits, global_operator, second_num_digits
     ready_to_operate = True
-    append_num_list = True
+    first_num_digits = False
     global_operator = operator
+    second_num_digits = True
     print(f"preparing to: '{operator}'")
     
 
@@ -86,14 +89,15 @@ def do_operation(first_num, second_num, operator):
         print("ERROR: ready_to_operate is False")
 
 def get_result(): # capable of integer arithmetic, need to make a parser that can tell if there needs any float number, or if there is just zeros after the period.
-    global num_string_list, append_num_list, ready_to_operate
+    global num_string_list, first_num_digits, ready_to_operate, second_num_digits
     first_num = int(num_string_list[0])
     second_num = int(num_string_list[1])
 
     result = do_operation(first_num, second_num, global_operator)
     # Turns out that you can get 2.5 or float numbers as a result but can't use them in the initial equation!
     num_string_list = [] # Reset it back to an empty list
-    append_num_list = True
+    first_num_digits = True
+    second_num_digits = False
     ready_to_operate = False
     num_string_list = [str(result)]
     

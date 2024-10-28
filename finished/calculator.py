@@ -89,7 +89,7 @@ def get_result(): # capable of integer arithmetic, need to make a parser that ca
     second_num = int(num_string_list[1])
 
     result = do_operation(first_num, second_num, global_operator)
-    
+    # Turns out that you can get 2.5 or float numbers as a result but can't use them in the initial equation!
     num_string_list = [] # Reset it back to an empty list
     append_num_list = True
     ready_to_operate = False

@@ -11,12 +11,12 @@ global_operator = "" # set to
 
 # Start App, initialize the font
 app = tk.Tk()
-main_font = tkf.Font(app, family = "Helvitica", size=18, weight = "bold")
+main_font = tkf.Font(app, family = "Helvetica", size=18, weight = "bold")
 append_num_list = True
 # Apply Width and Height "app.VAR" to the app window-variable
 dimensions = f"{width}x{height}"
 app.geometry(dimensions)
-
+app.title("Calculator")
 # Create an abstract grid so we can arrange buttons and labels and stuff
 app.grid()
 
@@ -84,12 +84,17 @@ def do_operation(first_num, second_num, operator):
         print("ERROR: ready_to_operate is False")
 
 def get_result(): # capable of integer arithmetic, need to make a parser that can tell if there needs any float number, or if there is just zeros after the period.
+    global num_string_list, append_num_list, ready_to_operate
     first_num = int(num_string_list[0])
     second_num = int(num_string_list[1])
 
     result = do_operation(first_num, second_num, global_operator)
     
-
+    num_string_list = [] # Reset it back to an empty list
+    append_num_list = True
+    ready_to_operate = False
+    num_string_list = [str(result)]
+    
     display.config(text = str(result))
 
 # Display Field

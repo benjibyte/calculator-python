@@ -48,7 +48,13 @@ def append_num(num, list_num):
         display.config(text =write_to_num)
         print(list_num)    
 
-def operator (first_num, second_num, operator):
+def begin_math(operator):
+    global ready_to_operate, append_num_list
+    ready_to_operate = True
+    append_num_list = True
+    print(f"preparing to: '{operator}'")
+
+def do_operation(first_num, second_num, operator):
     global ready_to_operate
     print(f"Ready To Operate : {ready_to_operate}")
     if ready_to_operate:
@@ -110,11 +116,11 @@ nine.grid(row = 2, column = 2)
 zero.grid(row = 5, column = 1)
 
 # The Operator Buttons
-add = ttk.Button(app, text = "+")
-sub = ttk.Button(app, text = "-")
-mult = ttk.Button(app, text = "×")
-divi = ttk.Button(app, text = "÷")
-equal = ttk.Button(app, text = "=")
+add = ttk.Button(app, text = "+", command = lambda: begin_math("+"))
+sub = ttk.Button(app, text = "-", command = lambda: begin_math("-"))
+mult = ttk.Button(app, text = "×", command = lambda: begin_math("x"))
+divi = ttk.Button(app, text = "÷", command = lambda: begin_math("÷"))
+equal = ttk.Button(app, text = "=", command = lambda: )
 
 # Format the Operator Buttons
 add.grid(row = 2, column = 4)

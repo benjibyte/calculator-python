@@ -7,7 +7,7 @@ height = 400
 num_string_list = []
 append_num_list = False
 ready_to_operate = False
-
+global_operator = "" # set to 
 
 # Start App, initialize the font
 app = tk.Tk()
@@ -25,6 +25,7 @@ def reset():
     num_string_list = [] # Reset it back to an empty list
     append_num_list = True
     ready_to_operate = False
+    global_operator = ""
     display.config(text = "")
     
 
@@ -49,10 +50,12 @@ def append_num(num, list_num):
         print(list_num)    
 
 def begin_math(operator):
-    global ready_to_operate, append_num_list
+    global ready_to_operate, append_num_list, global_operator
     ready_to_operate = True
     append_num_list = True
+    global_operator = operator
     print(f"preparing to: '{operator}'")
+    
 
 def do_operation(first_num, second_num, operator):
     global ready_to_operate
@@ -80,7 +83,16 @@ def do_operation(first_num, second_num, operator):
     else:
         print("ERROR: ready_to_operate is False")
 
-# Display Field f
+def get_result():
+    first_num = int(num_string_list[0])
+    second_num = int(num_string_list[1])
+
+    result = do_operation(first_num, second_num, global_operator)
+    
+
+    display.config(text = str(result))
+
+# Display Field
 
 dark_field = "#260a2e"
 dark_background = "#0C0535"
@@ -120,7 +132,7 @@ add = ttk.Button(app, text = "+", command = lambda: begin_math("+"))
 sub = ttk.Button(app, text = "-", command = lambda: begin_math("-"))
 mult = ttk.Button(app, text = "×", command = lambda: begin_math("x"))
 divi = ttk.Button(app, text = "÷", command = lambda: begin_math("÷"))
-equal = ttk.Button(app, text = "=", command = lambda: )
+equal = ttk.Button(app, text = "=", command = lambda: get_result())
 
 # Format the Operator Buttons
 add.grid(row = 2, column = 4)

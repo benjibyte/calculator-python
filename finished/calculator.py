@@ -32,18 +32,20 @@ def reset():
 def append_num(num, list_num):
     global ready_to_operate
     global append_num_list
-    if append_num_list == True: # Update the list num, so we can operate on the two numbers later
-        list_num.append(str(num))
+    if append_num_list: # Update the list num, so we can operate on the two numbers later
+        list_num.append(num)
+        
         append_num_list = False # Set it to false so the next number is just written on
         
         print(list_num)
         display.config(text = str(num))
         return list_num
-    else: # append another digit to the first number and then replace the old "num" in the list
+    elif len: # append another digit to the first number and then replace the old "num" in the list
         write_to_num = str(list_num[0]) 
         # There will only be 2 things in the list, because once they are 
         # operated on they are put back into the first index[0] of the num list
         write_to_num += str(num)
+        print(list_num)  
         list_num[0] = write_to_num
       
         display.config(text =write_to_num)

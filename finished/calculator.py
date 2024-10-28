@@ -83,7 +83,7 @@ def do_operation(first_num, second_num, operator):
     else:
         print("ERROR: ready_to_operate is False")
 
-def get_result():
+def get_result(): # capable of integer arithmetic, need to make a parser that can tell if there needs any float number, or if there is just zeros after the period.
     first_num = int(num_string_list[0])
     second_num = int(num_string_list[1])
 

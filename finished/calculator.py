@@ -1,6 +1,13 @@
+import os
 import tkinter as tk
 from tkinter import ttk
+from ttkbootstrap import Style
+from ttkthemes import ThemedTk
 import tkinter.font as tkf
+# I use an icon by...
+#<a href="https://www.freepik.com/icon/calculator_4263413#fromView=keyword&page=1&position=33&uuid=7f8efb46-8b2b-463a-8788-9778055fb08f">Icon by Freepik</a>
+
+
 # Define window width and height, setup the number string, setuip the ready_to_operate variable that switches from input mode to calculation mode
 width = 300
 height = 400
@@ -8,11 +15,12 @@ num_string_list = []
 first_num_digits = True
 second_num_digits = False
 ready_to_operate = False
-global_operator = "" # set to 
+global_operator = "" 
+
 
 
 # Start App, initialize the font
-app = tk.Tk()
+app = ThemedTk(theme="black")
 main_font = tkf.Font(app, family = "Helvetica", size=18, weight = "bold")
 first_num_digits = True
 # Apply Width and Height "app.VAR" to the app window-variable
@@ -21,6 +29,27 @@ app.geometry(dimensions)
 app.title("Calculator")
 # Create an abstract grid so we can arrange buttons and labels and stuff
 app.grid()
+app.resizable(False, False)
+
+# Get the directory of the current script
+current_dir = os.path.dirname(os.path.abspath(__file__))
+icon_path = os.path.join(current_dir, "icon.png")
+
+# Set the window icon
+try:
+    icon = tk.PhotoImage(file=icon_path)
+    app.iconphoto(False, icon)
+except tk.TclError as e:
+    print(f"Error loading icon: {e}")
+
+
+for btn in range(10):  # Adjust as needed
+    app.grid_rowconfigure(btn, weight=1)  # Make each row expandable
+    app.grid_columnconfigure(0, weight=1)
+    app.grid_columnconfigure(1, weight=1)
+    app.grid_columnconfigure(2, weight=1)
+    app.grid_columnconfigure(3, weight=1)
+    app.grid_columnconfigure(4, weight=1)
 
 def reset():
     global num_string_list, first_num_digits, ready_to_operate, global_operator, second_num_digits
@@ -29,9 +58,8 @@ def reset():
     second_num_digits = False
     ready_to_operate = False
     global_operator = ""
-    display.config(text = "")
+    display.config(text = "Cleared Everything")
     
-
 def append_num(num, list_num, old_length=0):
     global ready_to_operate, first_num_digits, second_num_digits
     
@@ -50,9 +78,6 @@ def append_num(num, list_num, old_length=0):
     print(list_num)
     return list_num
 
-
-
-
 def begin_math(operator):
     global ready_to_operate, first_num_digits, global_operator, second_num_digits
     ready_to_operate = True
@@ -60,8 +85,8 @@ def begin_math(operator):
     global_operator = operator
     second_num_digits = True
     print(f"preparing to: '{operator}'")
+    display.configure(text=str(operator))
     
-
 def do_operation(first_num, second_num, operator):
     global ready_to_operate
     print(f"Ready To Operate : {ready_to_operate}")
@@ -102,59 +127,60 @@ def get_result(): # capable of integer arithmetic, need to make a parser that ca
     num_string_list = [str(result)]
     
     display.config(text = str(result))
+style = Style('darkly')
+app_background = "#2C2C2C"
 
-# Display Field
+btnstyle = {'width': 12, 'bootstyle': 'dark'}
 
-dark_field = "#260a2e"
-dark_background = "#0C0535"
-dark_text = "#FFFFFF"
-display = tk.Message(app, bg = dark_field, fg = dark_text, width=250, font=main_font)
-display.grid(row = 1, column= 0, columnspan=5, sticky = "nsew")
 
+white_text = "#FFFFFF"
+display = ttk.Label(app, font=main_font, anchor='center')
+display.grid(row = 1, column= 0, columnspan=5, rowspan = 4, sticky = "nsew", pady=20)
+app.configure(bg=app_background)
 # Number Buttons LAMBDA
-one = ttk.Button(app, text = "1", command = lambda: append_num(1, num_string_list))
-two = ttk.Button(app, text = "2", command = lambda: append_num(2, num_string_list))
-three = ttk.Button(app, text = "3", command = lambda: append_num(3, num_string_list))
-four = ttk.Button(app, text = "4", command = lambda: append_num(4, num_string_list))
-five = ttk.Button(app, text = "5", command = lambda: append_num(5, num_string_list))
-six = ttk.Button(app, text = "6", command = lambda: append_num(6, num_string_list))
-seven = ttk.Button(app, text = "7", command = lambda: append_num(7, num_string_list))
-eight = ttk.Button(app, text = "8", command = lambda: append_num(8, num_string_list))
-nine = ttk.Button(app, text = "9", command = lambda: append_num(9, num_string_list))
-zero = ttk.Button(app, text = "0", command = lambda: append_num(0, num_string_list))
+one = ttk.Button(app, text = "1",**btnstyle, padding = 10, command = lambda: append_num(1, num_string_list))
+two = ttk.Button(app, text = "2",**btnstyle, padding = 10, command = lambda: append_num(2, num_string_list))
+three = ttk.Button(app, text = "3",**btnstyle, padding = 10, command = lambda: append_num(3, num_string_list))
+four = ttk.Button(app, text = "4",**btnstyle, padding = 10, command = lambda: append_num(4, num_string_list))
+five = ttk.Button(app, text = "5",**btnstyle, padding = 10, command = lambda: append_num(5, num_string_list))
+six = ttk.Button(app, text = "6",**btnstyle, padding = 10, command = lambda: append_num(6, num_string_list))
+seven = ttk.Button(app, text = "7",**btnstyle, padding = 10, command = lambda: append_num(7, num_string_list))
+eight = ttk.Button(app, text = "8",**btnstyle, padding = 10, command = lambda: append_num(8, num_string_list))
+nine = ttk.Button(app, text = "9",**btnstyle, padding = 10, command = lambda: append_num(9, num_string_list))
+zero = ttk.Button(app, text = "0",**btnstyle, padding = 10, command = lambda: append_num(0, num_string_list))
 
 # Format the Number Buttons
-one.grid(row = 4, column = 0)
-two.grid(row = 4, column = 1)
-three.grid(row = 4, column = 2)
+one.grid(row = 7, column = 0, padx=5)
+two.grid(row = 7, column = 1, padx=5)
+three.grid(row = 7, column = 2, padx=5)
 
-four.grid(row = 3, column = 0)
-five.grid(row = 3, column = 1)
-six.grid(row = 3, column = 2)
+four.grid(row = 6, column = 0, padx=5)
+five.grid(row = 6, column = 1, padx=5)
+six.grid(row = 6, column = 2, padx=5)
 
-seven.grid(row = 2, column = 0)
-eight.grid(row = 2, column = 1)
-nine.grid(row = 2, column = 2)
+seven.grid(row = 5, column = 0, padx=5)
+eight.grid(row = 5, column = 1, padx=5)
+nine.grid(row = 5, column = 2, padx=5)
 
-zero.grid(row = 5, column = 1)
+zero.grid(row = 8, column = 1, padx=5)
 
 # The Operator Buttons
-add = ttk.Button(app, text = "+", command = lambda: begin_math("+"))
-sub = ttk.Button(app, text = "-", command = lambda: begin_math("-"))
-mult = ttk.Button(app, text = "×", command = lambda: begin_math("x"))
-divi = ttk.Button(app, text = "÷", command = lambda: begin_math("÷"))
-equal = ttk.Button(app, text = "=", command = lambda: get_result())
+add = ttk.Button(app, text = "+",**btnstyle, padding = 10, command = lambda: begin_math("+"))
+sub = ttk.Button(app, text = "-",**btnstyle, padding = 10, command = lambda: begin_math("-"))
+mult = ttk.Button(app, text = "×",**btnstyle, padding = 10, command = lambda: begin_math("x"))
+divi = ttk.Button(app, text = "÷",**btnstyle, padding = 10, command = lambda: begin_math("÷"))
+equal = ttk.Button(app, text = "=",**btnstyle, padding = 10, command = lambda: get_result())
 
 # Format the Operator Buttons
-add.grid(row = 2, column = 4)
-sub.grid(row = 3, column = 4)
-mult.grid(row = 4, column = 4)
-divi.grid(row = 5, column = 4)
-equal.grid(row = 5, column = 2)
+add.grid(row = 5, column = 4, padx=5)
+sub.grid(row = 6, column = 4, padx=5)
+mult.grid(row = 7, column = 4, padx=5)
+divi.grid(row = 8, column = 4, padx=5)
+equal.grid(row = 8, column = 2, padx=5)
 
 # The CE RESET button
-reset = ttk.Button(app, text = "CE", command = reset)
-reset.grid(row = 5, column = 0)
+reset = ttk.Button(app, text = "CE",**btnstyle, padding= 10, command = reset)
+reset.grid(row = 8, column = 0, padx=5)
 
 
 # Keep app open until closing

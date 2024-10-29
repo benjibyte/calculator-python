@@ -1,5 +1,4 @@
-import tkinter
-from tkinter import font
+import ttkbootstrap as ttk
 
-master = tkinter.Tk()
-print(font.names())
+style = ttk.Style()
+print(style.theme_names())
